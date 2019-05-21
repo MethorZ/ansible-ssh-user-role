@@ -1,0 +1,12 @@
+---
+##
+# Sets up the root user with authorized keys
+##
+- name: AUTHORIZED_KEY | Deploy authorized keys for the root user
+  authorized_key:
+    user: root
+    key: "{{ item }}"
+    state: present
+    validate_certs: false
+  when: ansible_ssh_deploy_root_keys
+  with_items: "{{ ansible_ssh_root_keys }}"

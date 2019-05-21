@@ -1,0 +1,26 @@
+---
+##
+# Sets up the root user
+##
+- name: USER | Create ssh users
+  user:
+    name: "{{ item.0.user }}"
+    create_home: yes
+    shell: /bin/bash
+  with_subelements:
+    - "{{ ansible_ssh_users }}"
+    - keys
+  when: ansible_ssh_create_users
+
+- name: AUTHORIZED_KEY | Deploy authorized keys for ssh users
+  authorized_key:
+    user: "{{ item.0.user }}" # Item index refers to the sub element
+    key: "{{ item.1 }}"
+    state: present
+    validate_certs: false
+  with_subelements:
+    - "{{ ansible_ssh_users }}"
+    - keys
+  when:
+    - ansible_ssh_create_users
+    - ansible_ssh_deploy_keys

@@ -1,0 +1,13 @@
+---
+##
+# Setup all required packages
+##
+- name: APT | Updating the apt cache
+  apt:
+    update_cache: yes
+
+- name: APT | Make sure the sudo package is installed
+  apt:
+    name: sudo
+    state: latest
+  when: ansible_ssh_user_create and ansible_ssh_user_allow_sudo

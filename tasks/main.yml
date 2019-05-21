@@ -1,0 +1,22 @@
+---
+##
+# Import variable definitions and defaults
+##
+- name: IMPORT_TASKS | Setup Variable definitions / defaults
+  import_tasks: setup-variables.yml
+
+#
+# Setup the OS based on family
+#
+- name: IMPORT_TASKS | Setup SSH dependencies for OS
+  import_tasks: "setup-Debian.yml"
+  when: ansible_facts['os_family'] == 'Debian'
+
+- name: IMPORT_TASKS | Deploy ansible management SSH user
+  import_tasks: deploy-ansible-user.yml
+
+- name: IMPORT_TASKS | Setup root user
+  import_tasks: setup-root.yml
+
+- name: IMPORT_TASKS | Deploy additional SSH users
+  import_tasks: deploy-ssh-users.yml
