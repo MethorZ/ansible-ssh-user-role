@@ -1,4 +1,5 @@
 galaxy_info:
+  role_name: ansible-ssh-user
   author: MethorZ
   description: Ansible management ssh user setup. Supports additional ssh user creation
   company: MethorZ
