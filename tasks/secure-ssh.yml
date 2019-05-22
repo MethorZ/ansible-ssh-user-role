@@ -1,0 +1,21 @@
+---
+##
+# Secure ssh access
+##
+- name: LINEINFILE | Deny password authentication
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^PasswordAuthentication"
+    line: "PasswordAuthentication no"
+    state: present
+  when: ansible_ssh_deny_passwd_auth
+  notify: restart ssh
+
+- name: LINEINFILE | Deny root SSH access
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^PermitRootLogin"
+    line: "PermitRootLogin no"
+    state: present
+  when: ansible_ssh_deny_root_login
+  notify: restart ssh

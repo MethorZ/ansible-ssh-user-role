@@ -14,6 +14,16 @@ Role Variables
 
 ```YAML
 ##
+# General ssh configuration
+##
+
+# Disallow password authentication (inly use key auth)
+ansible_ssh_deny_passwd_auth: false
+
+# Deny root login
+ansible_ssh_deny_root_login: false
+
+##
 # Defaults for the ansible management ssh user
 ##
 
