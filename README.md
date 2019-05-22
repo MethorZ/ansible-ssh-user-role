@@ -83,6 +83,19 @@ Example Playbook
       roles:
          - { role: methorz.ansible_ssh_user }
 
+Example tag usage
+----------------
+```YAML
+# The secure ssh options require explicit tag usage to be executed
+ansible-playbook secure.yml --tags "secure_ssh" 
+
+# The ansible user setup options require explicit tag usage to be executed.
+# The remote user can also be provided
+ansible-playbook secure.yml -u root --tags "first_run"
+
+```
+
+
 License
 -------
 
