@@ -14,11 +14,13 @@
   import_tasks: "setup-Debian.yml"
   when: ansible_facts['os_family'] == 'Debian'
   tags:
+    - never
     - first_run
 
 - name: IMPORT_TASKS | Deploy ansible management SSH user
   import_tasks: deploy-ansible-user.yml
   tags:
+    - never
     - first_run
 
 - name: IMPORT_TASKS | Setup root user
@@ -27,6 +29,7 @@
 - name: IMPORT_TASKS | Secure ssh access
   import_tasks: secure-ssh.yml
   tags:
+    - never
     - secure_ssh
 
 - name: IMPORT_TASKS | Deploy additional SSH users
