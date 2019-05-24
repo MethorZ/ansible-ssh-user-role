@@ -3,10 +3,13 @@
 # General ssh configuration
 ##
 
+# Enable ansible ssh
+ansible_ssh_enabled: false
+
 # Disallow password authentication (only use key auth)
 ansible_ssh_deny_passwd_auth: false
 
-# Deny root login
+# Deny root login - true will set without-password value
 ansible_ssh_deny_root_login: false
 
 ##

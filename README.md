@@ -20,7 +20,7 @@ Role Variables
 # Disallow password authentication (inly use key auth)
 ansible_ssh_deny_passwd_auth: false
 
-# Deny root login
+# Deny root login - true will set without-password value
 ansible_ssh_deny_root_login: false
 
 ##

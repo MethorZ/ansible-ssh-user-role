@@ -15,7 +15,7 @@
   lineinfile:
     dest: /etc/ssh/sshd_config
     regexp: "^PermitRootLogin"
-    line: "PermitRootLogin no"
+    line: "PermitRootLogin without-password"
     state: present
   when: ansible_ssh_deny_root_login
   notify: restart ssh
