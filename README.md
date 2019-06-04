@@ -28,13 +28,13 @@ ansible_ssh_deny_root_login: false
 ##
 
 # Name of the ansible management ssh user
-ansible_ssh_user: ansible
+ansible_ssh_mgm_user: ansible
 
 # Example path for ansible ssh public key
-ansible_ssh_user_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQAB.......VfjQ37gTQ== Ansible Mangement User"
+ansible_ssh_mgm_user_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQAB.......VfjQ37gTQ== Ansible Mangement User"
 
 # Create ansible management SSH user
-ansible_ssh_user_create: true
+ansible_ssh_mgm_user_create: true
 
 # Allow password less sudo for ansible management user
 ansible_ssh_user_allow_sudo: true

@@ -7,5 +7,5 @@
 
 - name: FACTS - Define group for ansible user equal to user name
   set_fact:
-    ansible_ssh_user_group: "{{ ansible_ssh_user }}"
+    ansible_ssh_user_group: "{{ ansible_ssh_mgm_user }}"
   when: not ansible_ssh_user_allow_sudo

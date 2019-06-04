@@ -10,4 +10,4 @@
   apt:
     name: sudo
     state: latest
-  when: ansible_ssh_user_create and ansible_ssh_user_allow_sudo
+  when: ansible_ssh_mgm_user_create and ansible_ssh_user_allow_sudo
