@@ -28,7 +28,7 @@ ansible_ssh_deny_root_login: false
 ##
 
 # Name of the ansible management ssh user
-ansible_ssh_user: ansible
+ansible_ssh_management_user: ansible
 
 # Example path for ansible ssh public key
 ansible_ssh_user_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQAB.......VfjQ37gTQ== Ansible Mangement User"

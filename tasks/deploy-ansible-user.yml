@@ -18,19 +18,11 @@
       line: '%wheel ALL=(ALL) NOPASSWD: ALL'
       validate: 'visudo -cf %s'
 
-  - name: LINEINFILE | Allow 'wheel' group to have passwordless sudo
-    lineinfile:
-      dest: /etc/sudoers
-      state: present
-      regexp: '^%wheel'
-      line: '%wheel ALL=(ALL) NOPASSWD: ALL'
-      validate: 'visudo -cf %s'
-
   when: ansible_ssh_user_create and ansible_ssh_user_allow_sudo
 
 - name: USER | Create ansible management SSH user
   user:
-    name: "{{ ansible_ssh_user }}"
+    name: "{{ ansible_ssh_management_user }}"
     groups: "{{ ansible_ssh_user_group }}"
     append: yes
     create_home: yes
@@ -39,7 +31,7 @@
 
 - name: AUTHORIZED_KEY | Deploy authorized_key for ansible management SSH user
   authorized_key:
-    user: "{{ ansible_ssh_user }}"
+    user: "{{ ansible_ssh_management_user }}"
     key: "{{ ansible_ssh_user_key }}"
     state: present
     validate_certs: false
