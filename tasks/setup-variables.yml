@@ -1,11 +1,23 @@
 ---
 #
-# Default variable setup
+# Default OS specific variable definitions / defaults
 #
-- name: INCLUDE_VARS | Default variables
-  include_vars: "defaults.yml"
+- name: INCLUDE_VARS | OS specific vars
+  include_vars: "{{ ansible_facts['os_family'] }}.yml"
 
-- name: FACTS - Define group for ansible user equal to user name
+- name: FACTS - Define sudo package name
   set_fact:
-    ansible_ssh_user_group: "{{ ansible_ssh_mgm_user }}"
-  when: not ansible_ssh_user_allow_sudo
+    ansible_ssh_sudo_package: "{{ __ansible_ssh_sudo_package }}"
+
+- name: FACTS - Define sudoers management file
+  set_fact:
+    ansible_ssh_sudoers_file: "{{ __ansible_ssh_sudoers_file }}"
+
+- name: FACTS - Define python package name
+  set_fact:
+    ansible_ssh_python_package: "{{ __ansible_ssh_python_package }}"
+
+- name: FACTS - Define additional ssh users
+  set_fact:
+    ansible_ssh_users: "{{ ansible_ssh_users | list + ansible_ssh_additional_users | list }}"
+  when: ansible_ssh_additional_users is defined

@@ -1,10 +1,10 @@
 galaxy_info:
-  role_name: ansible-ssh-user
+  role_name: methorz.ansible-ssh-user
   author: MethorZ
   description: Ansible management ssh user setup. Supports additional ssh user creation
   company: MethorZ
   license: license (BSD, MIT)
-  min_ansible_version: 2.5
+  min_ansible_version: 2.14
   platforms:
     - name: Debian
       versions:

@@ -1,6 +1,9 @@
 ---
 ##
-# Sets up the root user
+# Sets up the ssh users and their authorized keys
+#
+# TODO - This will currently not create a new user that has no "keys"!
+# TODO - The state is refering to the access keys, not the user!
 ##
 - name: USER | Create ssh users
   user:
@@ -10,13 +13,16 @@
   with_subelements:
     - "{{ ansible_ssh_users }}"
     - keys
-  when: ansible_ssh_create_users
+  when: 
+    - ansible_ssh_create_users
+    - item.0.user != 'root' # Skip root user creation
+    - item.0.user != ansible_ssh_mgm_user # Skip ansible management user creation
 
 - name: AUTHORIZED_KEY | Deploy authorized keys for ssh users
   authorized_key:
     user: "{{ item.0.user }}" # Item index refers to the sub element
     key: "{{ item.1 }}"
-    state: present
+    state: "{{ item.0.state | default('present') }}"
     validate_certs: false
   with_subelements:
     - "{{ ansible_ssh_users }}"

@@ -6,8 +6,13 @@
   apt:
     update_cache: yes
 
+- name: APT | Make sure python is installed
+  apt:
+    name: "{{ ansible_ssh_python_package }}"
+    state: present
+
 - name: APT | Make sure the sudo package is installed
   apt:
-    name: sudo
-    state: latest
-  when: ansible_ssh_mgm_user_create and ansible_ssh_user_allow_sudo
+    name: "{{ ansible_ssh_sudo_package }}"
+    state: present
+  when: ansible_ssh_mgm_user_create

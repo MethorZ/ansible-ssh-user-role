@@ -5,17 +5,26 @@
 - name: LINEINFILE | Deny password authentication
   lineinfile:
     path: /etc/ssh/sshd_config
-    regexp: "^PasswordAuthentication"
+    regexp: "^#?PasswordAuthentication"
     line: "PasswordAuthentication no"
     state: present
-  when: ansible_ssh_deny_passwd_auth
+  when: ansible_ssh_secure_deny_passwd_auth
   notify: restart ssh
 
 - name: LINEINFILE | Deny root SSH access
   lineinfile:
     dest: /etc/ssh/sshd_config
-    regexp: "^PermitRootLogin"
+    regexp: "^#?PermitRootLogin"
     line: "PermitRootLogin without-password"
     state: present
-  when: ansible_ssh_deny_root_login
+  when: ansible_ssh_secure_deny_root_login
+  notify: restart ssh
+
+- name: LINEINFILE | Switch SSH port
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^#?Port"
+    line: "Port {{ ansible_ssh_secure_port }}"
+    state: present
+  when: ansible_ssh_secure_port
   notify: restart ssh

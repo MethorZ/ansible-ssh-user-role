@@ -1,0 +1,28 @@
+---
+##
+# Deploys the ansible management user
+##
+- name: USER | Create ansible management SSH user
+  user:
+    name: "{{ ansible_ssh_mgm_user }}"
+    state: present
+    shell: /bin/bash
+    system: no
+    comment: Ansible Deployment User
+  when: ansible_ssh_mgm_user_create
+
+- name: LINEINFILE | Ensure the ansible user is sudoer with no password required 
+  lineinfile: 
+    dest: "{{ ansible_ssh_sudoers_file }}" 
+    state: present 
+    regexp: "^{{ ansible_ssh_mgm_user }} ALL="
+    line: "{{ ansible_ssh_mgm_user }} ALL=(ALL) NOPASSWD:ALL"
+    validate: 'visudo -cf %s' 
+  when: ansible_ssh_mgm_user_create and ansible_ssh_mgm_user_allow_sudo
+
+- name: AUTHORIZED_KEY | Deploy authorized_key for ansible management SSH user
+  authorized_key:
+    user: "{{ ansible_ssh_mgm_user }}"
+    key: "{{ ansible_ssh_mgm_user_key }}"
+    state: present
+  when: ansible_ssh_mgm_user_create and ansible_ssh_mgm_user_deploy_key and ansible_ssh_mgm_user_deploy_key != ""

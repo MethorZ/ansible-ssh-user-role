@@ -1,59 +1,74 @@
 ---
 ##
-# General ssh configuration
+# General ssh configuration and ansible management user setup
 ##
 
-# Enable ansible ssh
+# Enable ansible ssh role
 ansible_ssh_enabled: false
 
-# Disallow password authentication (only use key auth)
-ansible_ssh_deny_passwd_auth: false
+# Create additional ssh users
+ansible_ssh_create_users: false
 
-# Deny root login - true will set without-password value
-ansible_ssh_deny_root_login: false
+# Deploy keys for additional ssh users
+ansible_ssh_deploy_keys: false
+
+# SSH users to be created and have ssh keys deployed
+ansible_ssh_users: []
+  # - user: username
+  #   state: present
+  #   keys:
+  #     - String
+  #     - http://url-of-keys.list
+
+# Additional ssh users to be added
+#ansible_ssh_additional_users: []
+# - user: username
+#   state: present
+#   keys:
+#     - String
+#     - http://url-of-keys.list
 
 ##
-# Defaults for the ansible management ssh user
+# Initial basic setup for the root and ansible management user required during
+# the initial setup step
+#
+# Notice: The following settings are bound to the usage of the "first_run" tag!
 ##
+
+# Create ansible management SSH user
+ansible_ssh_mgm_user_create: false
 
 # Name of the ansible management ssh user
 ansible_ssh_mgm_user: ansible
 
-# Example path for ansible ssh public key
-ansible_ssh_mgm_user_key: ""
-
-# Create ansible management SSH user
-ansible_ssh_mgm_user_create: true
-
 # Allow password less sudo for ansible management user
-ansible_ssh_user_allow_sudo: true
+ansible_ssh_mgm_user_allow_sudo: true
 
 # Deploy the ansible management user key
-ansible_ssh_user_deploy_key: true
+ansible_ssh_mgm_user_deploy_key: true
+
+# Ansible's management user public key to be deployed. Preferable as a encrypted vault string
+ansible_ssh_mgm_user_key: ""
+
+# Creates a random root password, sets it and writes it to the specified password file
+ansible_ssh_create_root_password: false
+
+# File that will contain the root password after creation
+ansible_ssh_root_password_file: /root/.pwd-root
 
 ##
-# Defaults for root setup
+# SSH security settings to provide higher security for the host
+#
+# Be careful when applying these since you may get locked out of your server!
+#
+# Notice: The following settings are bound to the usage of the "secure" tag!
 ##
 
-# Deploy configured root keys
-ansible_ssh_deploy_root_keys: true
+# Disallow password authentication (only use key auth)
+ansible_ssh_secure_deny_passwd_auth: false
 
-# List of keys for root deployment
-ansible_ssh_root_keys: []
+# Deny root login - true will set without-password value
+ansible_ssh_secure_deny_root_login: false
 
-##
-# Defaults for additional ssh users
-##
-
-# Create additional ssh users
-ansible_ssh_create_users: true
-
-# Deploy keys for additional ssh users
-ansible_ssh_deploy_keys: true
-
-# Additional users to be created
-ansible_ssh_users: []
-#    - user: username
-#      keys:
-#        - /path/to/key/file
-#        - http://url-of-keys.list
+# Set the ssh port to use for the ssh connection
+ansible_ssh_secure_port: 22

@@ -6,32 +6,31 @@
     - name: IMPORT_TASKS | Setup Variable definitions / defaults
       import_tasks: setup-variables.yml
       tags:
-        - first_run
+        - always
 
-    #
-    # Setup the OS based on family
-    #
     - name: IMPORT_TASKS | Setup SSH dependencies for OS
       import_tasks: "setup-Debian.yml"
       when: ansible_facts['os_family'] == 'Debian'
       tags:
-        - never
-        - first_run
+        - always
 
     - name: IMPORT_TASKS | Deploy ansible management SSH user
-      import_tasks: deploy-ansible-user.yml
+      import_tasks: deploy-ansible-management-user.yml
       tags:
         - never
         - first_run
 
     - name: IMPORT_TASKS | Setup root user
       import_tasks: setup-root.yml
+      tags:
+        - never
+        - first_run
 
     - name: IMPORT_TASKS | Secure ssh access
       import_tasks: secure-ssh.yml
       tags:
         - never
-        - secure_ssh
+        - secure
 
     - name: IMPORT_TASKS | Deploy additional SSH users
       import_tasks: deploy-ssh-users.yml

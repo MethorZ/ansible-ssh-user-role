@@ -1,7 +1,0 @@
----
-##
-# Default values for internal variables
-##
-
-# SSH user group for ansible user
-ansible_ssh_user_group: wheel

@@ -1,0 +1,13 @@
+---
+##
+# Default values for internal variables for Debian
+##
+
+# Sudo package name
+__ansible_ssh_sudo_package: sudo
+
+# Sudoers management file
+__ansible_ssh_sudoers_file: /etc/sudoers
+
+# Python 3 package name
+__ansible_ssh_python_package: python3
